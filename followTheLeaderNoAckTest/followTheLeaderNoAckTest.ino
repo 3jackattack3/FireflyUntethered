@@ -75,18 +75,16 @@ void checkRadio(){
       uint8_t len = sizeof(buf);
       if (rf69.recv(buf, &len)) {        
         if (strstr((char *)buf, "Hello World")) {
-          digitalWrite(LED, HIGH);
-          delay(100);
-          digitalWrite(LED, LOW);
+          blink();
         }
       }
     }
 }
 
 void blink(){
-    char radiopacket[20] = "Hello World #";
-    itoa(packetnum++, radiopacket+13, 10);
-    Serial.print("Sending "); Serial.println(radiopacket);
+    char radiopacket[20] = "Hello World";
+    //itoa(packetnum++, radiopacket+13, 10);
+    //Serial.print("Sending "); Serial.println(radiopacket);
     
     // Send a message!
     rf69.send((uint8_t *)radiopacket, strlen(radiopacket));
