@@ -111,6 +111,8 @@ void blink(){
     digitalWrite(LED, HIGH);
     delay(100);
     digitalWrite(LED, LOW);
+
+    previousMillis = mills();
   
     // Now wait for a reply
     uint8_t buf[RH_RF69_MAX_MESSAGE_LEN];
