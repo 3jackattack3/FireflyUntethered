@@ -73,29 +73,11 @@ void checkRadio(){
       // Should be a message for us now   
       uint8_t buf[RH_RF69_MAX_MESSAGE_LEN];
       uint8_t len = sizeof(buf);
-      if (rf69.recv(buf, &len)) {
-        
-    
-        if (!len) return;
-        buf[len] = 0;
-        Serial.print("Received [");
-        Serial.print(len);
-        Serial.print("]: ");
-        Serial.println((char*)buf);
-        Serial.print("RSSI: ");
-        Serial.println(rf69.lastRssi(), DEC);
-  
+      if (rf69.recv(buf, &len)) {        
         if (strstr((char *)buf, "Hello World")) {
           digitalWrite(LED, HIGH);
           delay(100);
           digitalWrite(LED, LOW);
-          
-          // Send a reply!
-          uint8_t data[] = "And hello back to you";
-          rf69.send(data, sizeof(data));
-          rf69.waitPacketSent();
-          Serial.println("Sent a reply");
-          //Blink(LED, 40, 3); //blink LED 3 times, 40ms between blinks
         }
       }
     }
@@ -115,19 +97,6 @@ void blink(){
     digitalWrite(LED, LOW);
 
     previousMillis = millis();
-  
-    // Now wait for a reply
-    uint8_t buf[RH_RF69_MAX_MESSAGE_LEN];
-    uint8_t len = sizeof(buf);
-  
-    if (rf69.waitAvailableTimeout(500))  { 
-      // Should be a reply message for us now   
-      if (rf69.recv(buf, &len)) {
-        Serial.print("Got a reply: ");
-        Serial.println((char*)buf);
-        //Blink(LED, 50, 3); //blink LED 3 times, 50ms between blinks
-      }
-    }
 }
 
 void timeToBlink(){
